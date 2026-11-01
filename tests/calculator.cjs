@@ -1,0 +1,40 @@
+const { chromium } = require('playwright');
+const assert = require('node:assert/strict');
+(async () => {
+  const browser = await chromium.launch({ executablePath: '/usr/bin/chromium', headless: true, args: ['--no-sandbox'] });
+  const page = await browser.newPage({ viewport: { width: 1280, height: 1000 } });
+  const errors = [];
+  page.on('pageerror', error => errors.push(error.message));
+  await page.goto(process.env.CALCULATOR_URL || 'http://127.0.0.1:8000');
+  async function check(keys, expected) {
+    await page.keyboard.press('Escape');
+    for (const key of keys) await page.keyboard.press(key);
+    assert.equal(await page.locator('#result').textContent(), expected, keys.join(' '));
+  }
+  await check(['1','2','+','3','Enter'], '15');
+  await check(['9','-','1','2','Enter'], '-3');
+  await check(['6','*','7','Enter'], '42');
+  await check(['8','/','4','Enter'], '2');
+  await check(['0','.','1','+','0','.','2','Enter'], '0.3');
+  await check(['8','/','0','Enter'], '0では割れません');
+  await page.keyboard.press('7');
+  assert.equal(await page.locator('#result').textContent(), '7');
+  await check(['2','+','3','Enter','Enter'], '8');
+  await check(['1','2','3','Backspace'], '12');
+  await check(['5','0','%'], '0.5');
+  await check(['5','+','*','2','Enter'], '10');
+  await page.getByRole('button', { name: 'すべてクリア', exact: true }).click();
+  await page.getByRole('button', { name: '9', exact: true }).click();
+  await page.getByRole('button', { name: '符号を切り替え' }).click();
+  await page.getByRole('button', { name: '足す' }).click();
+  await page.getByRole('button', { name: '4', exact: true }).click();
+  await page.getByRole('button', { name: '計算する', exact: true }).click();
+  assert.equal(await page.locator('#result').textContent(), '-5');
+  await page.screenshot({ path: '/tmp/calculator-desktop.png', fullPage: true });
+  await page.setViewportSize({ width: 375, height: 812 });
+  assert.equal(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth), true);
+  await page.screenshot({ path: '/tmp/calculator-mobile.png', fullPage: true });
+  assert.deepEqual(errors, []);
+  await browser.close();
+  console.log('Passed: 13 calculation/input checks, mobile overflow check, and browser error check.');
+})().catch(error => { console.error(error); process.exitCode = 1; });

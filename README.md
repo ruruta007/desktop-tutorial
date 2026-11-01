@@ -1,5 +1,25 @@
-# Welcome to GitHub Desktop!
+# こつこつ電卓
 
-This is your README. READMEs are where you can communicate what your project is and how to use it.
+日本語で使える、シンプルな四則演算のWeb電卓です。外部サービスや依存パッケージは不要です。
 
-Write your name on line 6, save it, and then head back to GitHub Desktop.
+## 使い方
+
+`index.html` をブラウザで開くか、このディレクトリで次のコマンドを実行します。
+
+```sh
+python -m http.server 8000
+```
+
+数字、小数点、四則演算、符号切り替え、パーセント、一文字削除に対応しています。連続する演算は入力順に計算します。`=` を繰り返すと直前の演算を繰り返します。
+
+キーボード: 数字・`.`・`+`・`-`・`*`・`/`、Enter（計算）、Esc（クリア）、Backspace（一文字削除）、`%`。
+
+## ブラウザテスト
+
+Playwright と Chromium がある環境で、上記サーバーを起動した状態で実行します。
+
+```sh
+node tests/calculator.cjs
+```
+
+Chromium の実行パスは `/usr/bin/chromium` を使用します。別のURLで配信する場合は `CALCULATOR_URL` を指定できます。

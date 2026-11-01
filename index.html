@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#edf2ed">
+  <title>こつこつ電卓</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="app.js" defer></script>
+</head>
+<body>
+  <header class="brand"><span class="brand-icon" aria-hidden="true">▦</span> こつこつ <span class="brand-label">CALCULATOR</span></header>
+  <main>
+    <section class="intro"><span class="eyebrow">EVERYDAY ESSENTIALS</span><h1>日々の計算を、<br>すっきりと。</h1><p>ちょっとした計算に、ちょうどいい電卓。</p></section>
+    <section class="calculator" aria-label="電卓">
+      <div class="calculator-top"><span><i></i> かんたん電卓</span><span class="mini-label">計算の、ひと休み。</span></div>
+      <div class="display"><div id="expression" class="expression" aria-label="計算式">&nbsp;</div><output id="result" aria-live="polite" aria-atomic="true">0</output></div>
+      <div class="keys">
+        <button class="utility" data-action="clear" aria-label="すべてクリア">AC</button>
+        <button class="utility" data-action="sign" aria-label="符号を切り替え">+/−</button>
+        <button class="utility" data-action="percent" aria-label="パーセント">%</button>
+        <button class="operator" data-action="operator" data-value="÷" aria-label="割る">÷</button>
+        <button data-value="7">7</button><button data-value="8">8</button><button data-value="9">9</button>
+        <button class="operator" data-action="operator" data-value="×" aria-label="掛ける">×</button>
+        <button data-value="4">4</button><button data-value="5">5</button><button data-value="6">6</button>
+        <button class="operator" data-action="operator" data-value="−" aria-label="引く">−</button>
+        <button data-value="1">1</button><button data-value="2">2</button><button data-value="3">3</button>
+        <button class="operator" data-action="operator" data-value="+" aria-label="足す">+</button>
+        <button data-value="0">0</button><button data-value="." aria-label="小数点">.</button>
+        <button class="backspace" data-action="delete" aria-label="一文字削除">⌫</button>
+        <button class="equals" data-action="equals" aria-label="計算する">=</button>
+      </div>
+      <div class="calculator-bottom"><span>シンプルに、正確に。</span><span aria-hidden="true">✳</span></div>
+    </section>
+    <p class="keyboard-hint"><span aria-hidden="true">⌨</span> キーボードでも操作できます <kbd>Enter</kbd> で計算 <kbd>Esc</kbd> でクリア</p>
+  </main>
+  <footer>小さな計算、大きなすっきり。<span>MADE FOR YOUR EVERYDAY</span></footer>
+</body>
+</html>
